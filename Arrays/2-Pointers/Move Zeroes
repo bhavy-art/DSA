@@ -1,0 +1,16 @@
+// In this solution we have to move all the zeroes at the end of the array while maintaining the relative order of the non-zero elements. We can use a two-pointer approach to achieve this in O(n) time complexity and O(1) space complexity.
+
+class Solution {
+    public void moveZeroes(int[] nums) {
+        int n = nums.length;
+        int left = 0;
+        for(int right = 0; right < n; right++){
+            if(nums[right] != 0){
+                int temp = nums[right];
+                nums[right] = nums[left];
+                nums[left] = temp;
+                left++;
+            }
+        }
+    }
+}
