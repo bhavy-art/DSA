@@ -10,11 +10,13 @@ class Solution {
 
         for(int i=0;i<n;i++){
             prefixSum += nums[i];
+            int target = prefixSum - k; 
 
-            if(map.containsKey(prefixSum - k)){
-                count += prefixSum - k;
+
+            if(map.containsKey(target)){
+                count += map.get(target);
             }
-            map.put(prefixSum, map.getOrDefault(pivotIndex, 0)+1);
+            map.put(prefixSum, map.getOrDefault(prefixSum, 0)+1);
         }
         return count;
     }
