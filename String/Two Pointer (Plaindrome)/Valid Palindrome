@@ -1,3 +1,5 @@
+Optimal approach => Time Complexity = O(n)
+
 class Solution {
     public boolean isPalindrome(String s) {
         int n = s.length();
