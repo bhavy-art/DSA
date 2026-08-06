@@ -1,0 +1,133 @@
+Brutr force approach => Time Complexity = (n*m*k)   space Complexity = O(n)
+
+class Solution {
+
+    public List<Integer> findSubstring(String s, String[] words) {
+
+        List<Integer> ans = new ArrayList<>();
+
+        if (words.length == 0)
+            return ans;
+
+        int wordLen = words[0].length();
+        int totalWords = words.length;
+        int totalLen = wordLen * totalWords;
+
+        HashMap<String, Integer> target = new HashMap<>();
+
+        for (String word : words)
+            target.put(word, target.getOrDefault(word, 0) + 1);
+
+        for (int i = 0; i <= s.length() - totalLen; i++) {
+
+            HashMap<String, Integer> seen = new HashMap<>();
+
+            int j = 0;
+
+            while (j < totalWords) {
+
+                int start = i + j * wordLen;
+
+                String curr = s.substring(start, start + wordLen);
+
+                seen.put(curr, seen.getOrDefault(curr, 0) + 1);
+
+                if (seen.get(curr) > target.getOrDefault(curr, 0))
+                    break;
+
+                j++;
+            }
+
+            if (j == totalWords)
+                ans.add(i);
+        }
+
+        return ans;
+    }
+}
+
+
+
+Optimal approach => Time Complexity = O(n)   space Complexity = O(n)
+
+class Solution {
+    public List<Integer> findSubstring(String s, String[] words) {
+
+        List<Integer> ans = new ArrayList<>();
+
+        if (s == null || s.length() == 0 || words.length == 0)
+            return ans;
+
+        int wordLen = words[0].length();
+        int totalWords = words.length;
+
+        HashMap<String, Integer> target = new HashMap<>();
+
+        // Store frequency of words
+        for (String word : words) {
+            target.put(word, target.getOrDefault(word, 0) + 1);
+        }
+
+        // Try every possible starting offset
+        for (int offset = 0; offset < wordLen; offset++) {
+
+            int left = offset;
+            int count = 0;
+
+            HashMap<String, Integer> window = new HashMap<>();
+
+            // Move right by one word at a time
+            for (int right = offset;
+                 right + wordLen <= s.length();
+                 right += wordLen) {
+
+                String word = s.substring(right, right + wordLen);
+
+                // Word not present
+                if (!target.containsKey(word)) {
+
+                    window.clear();
+                    count = 0;
+                    left = right + wordLen;
+
+                } else {
+
+                    window.put(word,
+                            window.getOrDefault(word, 0) + 1);
+
+                    count++;
+
+                    // Too many occurrences of this word
+                    while (window.get(word) > target.get(word)) {
+
+                        String leftWord =
+                                s.substring(left, left + wordLen);
+
+                        window.put(leftWord,
+                                window.get(leftWord) - 1);
+
+                        left += wordLen;
+                        count--;
+                    }
+
+                    // Valid window found
+                    if (count == totalWords) {
+
+                        ans.add(left);
+
+                        String leftWord =
+                                s.substring(left, left + wordLen);
+
+                        window.put(leftWord,
+                                window.get(leftWord) - 1);
+
+                        left += wordLen;
+                        count--;
+                    }
+                }
+            }
+        }
+
+        return ans;
+    }
+}
