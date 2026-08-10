@@ -1,0 +1,47 @@
+Optimal Solution => Time Complexity = O(n)
+// leetcode
+class Solution {
+    public void rotate(int[] nums, int k) {
+        int n = nums.length;
+        k = k%n;
+
+        reverse(nums, 0, n-1);
+        reverse(nums, 0, k-1);
+        reverse(nums, k, n-1);
+    }
+
+    privte void reverse(int [] nums, int start, int end){
+        while(start < end){
+            int temp = nums[start];
+            nums[start] = nums[end];
+            nums[end] = nums[temp];
+
+            left++;
+            right--;
+        }
+    }
+}
+
+
+
+
+Optimal Solution => Time Complexity = o(log n)
+// gog 
+class Solution {
+    public int findKRotation(int arr[]) {
+        // Code here
+        int left = 0;
+        int right = arr.length-1;
+        
+        while(left < right){
+            int mid = left + (right - left)/2;
+            
+            if(arr[mid] > arr[right]){
+                left = mid + 1;
+            }else{
+                right = mid;
+            }
+        }
+        return left;
+    }
+}
