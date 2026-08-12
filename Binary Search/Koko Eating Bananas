@@ -1,0 +1,85 @@
+Optimal Solution => Time Complexity(n log n)
+
+// leetcode
+class Solution {
+    public int minEatingSpeed(int[] piles, int h) {
+        int low = 1;
+        int high = 0;
+
+        for (int i = 0; i < piles.length; i++) {
+            high = Math.max(high, piles[i]);
+        }
+
+        int ans = high;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (canEat(piles, h, mid)) {
+                ans = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        return ans;
+    }
+
+    private boolean canEat(int[] piles, int h, int speed) {
+        long hours = 0;
+
+        for (int i = 0; i < piles.length; i++) {
+            hours += (piles[i] + speed - 1) / speed;
+
+            if (hours > h) {
+                return false;
+            }
+        }
+
+        return hours <= h;
+    }
+}
+
+
+
+// gog
+class Solution {
+    public int kokoEat(int[] arr, int k) {
+        int low = 1;
+        int high = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            high = Math.max(high, arr[i]);
+        }
+
+        int ans = high;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (canEat(arr, k, mid)) {
+                ans = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        return ans;
+    }
+
+    private boolean canEat(int[] arr, int h, int speed) {
+        long hours = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+            hours += (arr[i] + speed - 1) / speed;
+
+            if (hours > h) {
+                return false;
+            }
+        }
+
+        return hours <= h;
+    }
+}
