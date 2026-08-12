@@ -1,0 +1,86 @@
+// leet code
+class Solution {
+    public int shipWithinDays(int[] weights, int days) {
+        int low = 0;
+        int high = 0;
+
+        for(int i=0;i<weights.length;i++){
+            low = Math.max(low, weights[i]);
+            high += weights[i];
+        }
+
+        int ans = high;
+
+        while(low <= high){
+            int mid = low + (high - low)/2;
+
+            if(canShip(weights, days, mid)){
+                ans = mid;
+                high = mid - 1;
+            }else{
+                low = mid + 1;
+            }
+        }
+        return ans;
+    }
+
+    private boolean canShip(int[] weights, int days, int capacity){
+        int d = 1;
+        int currWeight = 0;
+
+        for(int i=0;i<weights.length;i++){
+            if(currWeight + weights[i] <= capacity){
+                currWeight += weights[i];
+            }else{
+                d++;
+                currWeight = weights[i];
+            }
+        }
+        return d <= days;
+    }
+}
+
+
+// gog
+class Solution {
+    public int leastWeightCapacity(ArrayList<Integer> arr, int D) {
+        // code here
+        int low = 0;
+        int high = 0;
+        
+        for(int weight : arr){
+            low = Math.max(low, weight);
+            high += weight;
+        }
+        
+        int ans = high;
+        
+        while(low <= high){
+            int mid = low + (high-low)/2;
+            
+            if(canShip(arr, D, mid)){
+                ans = mid;
+                high = mid - 1;
+            }else{
+                low = mid + 1;
+            }
+        }
+        return ans;
+    }
+    
+    private boolean canShip(ArrayList<Integer> arr, int D, int capacity){
+        int days = 1;
+        int currWeight = 0;
+        
+        for(int weight : arr){
+            if(currWeight + weight <= capacity){
+                currWeight += weight;
+            }else{
+                days++;
+                currWeight = weight;
+            }
+        }
+        return days <= D;
+    }
+    
+}
