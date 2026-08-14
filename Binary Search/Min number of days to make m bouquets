@@ -1,0 +1,126 @@
+// Leetcode
+class Solution {
+    public int minDays(int[] bloomDay, int m, int k) {
+
+        // Not enough flowers
+        if ((long) m * k > bloomDay.length) {
+            return -1;
+        }
+
+        int low = Integer.MAX_VALUE;
+        int high = Integer.MIN_VALUE;
+
+        // Find minimum and maximum bloom day
+        for (int day : bloomDay) {
+            low = Math.min(low, day);
+            high = Math.max(high, day);
+        }
+
+        int ans = -1;
+
+        while (low <= high) {
+
+            int mid = low + (high - low) / 2;
+
+            if (canMakeBouquets(bloomDay, m, k, mid)) {
+                ans = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+
+        return ans;
+    }
+
+    private boolean canMakeBouquets(int[] bloomDay, int m, int k, int day) {
+
+        int flowers = 0;
+        int bouquets = 0;
+
+        for (int i = 0; i < bloomDay.length; i++) {
+
+            if (bloomDay[i] <= day) {
+                flowers++;
+
+                if (flowers == k) {
+                    bouquets++;
+                    flowers = 0;
+                }
+
+            } else {
+                // Consecutive sequence breaks
+                flowers = 0;
+            }
+
+            if (bouquets >= m) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
+
+// gog
+class Solution {
+    public int minDaysBloom(int[] arr, int k, int m) {
+
+        // Not enough flowers
+        if ((long) k * m > arr.length) {
+            return -1;
+        }
+
+        int low = Integer.MAX_VALUE;
+        int high = Integer.MIN_VALUE;
+
+        for (int day : arr) {
+            low = Math.min(low, day);
+            high = Math.max(high, day);
+        }
+
+        int ans = -1;
+
+        while (low <= high) {
+            int mid = low + (high - low) / 2;
+
+            if (canMake(arr, k, m, mid)) {
+                ans = mid;
+                high = mid - 1;   // try fewer days
+            } else {
+                low = mid + 1;    // need more days
+            }
+        }
+
+        return ans;
+    }
+
+    private boolean canMake(int[] arr, int k, int m, int day) {
+
+        int flowers = 0;
+        int bouquets = 0;
+
+        for (int i = 0; i < arr.length; i++) {
+
+            if (arr[i] <= day) {
+                flowers++;
+
+                if (flowers == k) {
+                    bouquets++;
+                    flowers = 0;
+                }
+
+            } else {
+                // Consecutive sequence is broken
+                flowers = 0;
+            }
+
+            if (bouquets >= m) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
