@@ -1,0 +1,45 @@
+// Leetcode Optimal
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+
+        int row = 0;
+        int col = matrix[0].length - 1;
+
+        while (row < matrix.length && col >= 0) {
+
+            if (matrix[row][col] == target) {
+                return true;
+            } 
+            else if (matrix[row][col] > target) {
+                col--;
+            } 
+            else {
+                row++;
+            }
+        }
+
+        return false;
+    }
+}
+
+
+
+// gfg Optimal Solution 
+class Solution {
+    public boolean searchMatrix(int[][] mat, int x) {
+        // code here
+        int row = 0;
+        int col = mat[0].length-1;
+        
+        while(row < mat.length && col >= 0){
+            if(mat[row][col] == x){
+                return true;
+            }else if(mat[row][col] < x){
+                row++;
+            }else{
+                col--;
+            }
+        }
+        return false;
+    }
+}
