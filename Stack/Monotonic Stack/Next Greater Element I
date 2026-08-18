@@ -1,0 +1,64 @@
+// LeetCode Optimal Solution
+class Solution {
+    public int[] nextGreaterElement(int[] nums1, int[] nums2) {
+        Stack<Integer> stack = new Stack<>();
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        // Step 1: process nums2
+        for (int i = nums2.length - 1; i >= 0; i--) {
+            int num = nums2[i];
+
+            while (!stack.isEmpty() && stack.peek() <= num) {
+                stack.pop();
+            }
+
+            int nextGreater = stack.isEmpty() ? -1 : stack.peek();
+            map.put(num, nextGreater);
+
+            s.push(num);
+        }
+
+        // Step 2: build result
+        int[] res = new int[nums1.length];
+        for (int i = 0; i < nums1.length; i++) {
+            res[i] = map.get(nums1[i]);
+        }
+
+        return res;
+    }
+}
+
+
+
+// gfg
+
+class Solution {
+    public ArrayList<Integer> nextLargerElement(int[] arr) {
+        // code here
+        Stack<Integer> s = new Stack<>();
+         ArrayList<Integer> res = new ArrayList<>();
+        
+        for(int i=arr.length-1; i>=0; i--){
+            int num = arr[i];
+            
+            while(!s.isEmpty() && s.peek() <= num){
+             s.pop();   
+            }
+            // If stack is empty, no greater element exists
+                if (s.isEmpty()) {
+                    res.add(-1);
+                } else {
+                    res.add(s.peek());
+                }
+
+                // Push current element
+                s.push(num);
+            }
+
+            // We calculated from right to left,
+            // so reverse the result
+            Collections.reverse(res);
+
+            return res;
+    }
+}
