@@ -1,0 +1,71 @@
+// gfg Brute force approach = Time Complexity = O(n^2)
+class Solution {
+    public ArrayList<Integer> calculateSpan(int[] arr) {
+        // code here
+        int n = arr.length;
+        ArrayList<Integer> span = new ArrayList<>();
+
+        for(int i=0; i<n; i++){
+            int count = 1;
+            for(int j=i-1; j>=0; j--){
+                if(arr[j] <= arr[i]){
+                    count++;
+                }else{
+                    break;
+                }
+            }
+            span.add(count);
+        }
+        return span;
+    }
+}
+
+
+// gfg Optimal approach = Time Complexity = O(n)
+class Solution {
+    public ArrayList<Integer> calculateSpan(int[] arr) {
+        // code here
+        int n = arr.length;
+        ArrayList<Integer> span = new ArrayList<>();
+        Stack<Integer> stack = new Stack<>();
+        
+        for(int i=0; i<n; i++){
+            int num = arr[i];
+            
+            while(!stack.isEmpty() && arr[stack.peek()] <= num){
+                stack.pop();
+            }
+            if(stack.isEmpty()){
+                span.add(i+1);
+            }else{
+                span.add(i-stack.peek());
+            }
+            stack.push(i);
+        }
+           return span;
+    }
+}
+
+
+// Leetcode Optimal approach = Time Complexity = O(n)
+class StockSpanner {
+
+    Stack<int[]> stack;
+
+    public StockSpanner() {
+        stack = new Stack<>();
+    }
+
+    public int next(int price) {
+
+        int span = 1;
+
+        while (!stack.isEmpty() && stack.peek()[0] <= price) {
+            span += stack.pop()[1];
+        }
+
+        stack.push(new int[]{price, span});
+
+        return span;
+    }
+}
