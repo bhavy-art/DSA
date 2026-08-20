@@ -1,0 +1,71 @@
+// Leetcode
+class Solution {
+    public int evalRPN(String[] tokens) {
+     Stack<Integer> stack = new Stack<>();
+
+     for(int i=0; i < tokens.length; i++){
+        if(tokens[i].equals("+") || tokens[i].equals("-") || tokens[i].equals("*") || tokens[i].equals("/")){
+            int b = stack.pop();
+            int a = stack.pop();
+
+            if(tokens[i].equals("+")) stack.push(a+b);
+            else if(tokens[i].equals("-")) stack.push(a-b);
+            else if(tokens[i].equals("*")) stack.push(a*b);
+            else stack.push(a/b);
+        }else{
+            stack.push(Integer.parseInt(tokens[i]));
+        }
+     }  
+     return stack.peek();
+    }
+}
+
+// gfg
+import java.util.*;
+
+class Solution {
+    public int evaluatePostfix(String[] arr) {
+        
+        Stack<Integer> stack = new Stack<>();
+
+        for (String s : arr) {
+
+            // If it is an operator
+            if (s.equals("+") || s.equals("-") ||
+                s.equals("*") || s.equals("/") ||
+                s.equals("^")) {
+
+                int b = stack.pop();
+                int a = stack.pop();
+
+                if (s.equals("+")) {
+                    stack.push(a + b);
+                }
+                
+                else if (s.equals("-")) {
+                    stack.push(a - b);
+                }
+                
+                else if (s.equals("*")) {
+                    stack.push(a * b);
+                }
+                
+                else if (s.equals("/")) {
+                    // Floor division
+                    stack.push(Math.floorDiv(a, b));
+                }
+                
+                else if (s.equals("^")) {
+                    stack.push((int) Math.pow(a, b));
+                }
+
+            } 
+            // If it is a number
+            else {
+                stack.push(Integer.parseInt(s));
+            }
+        }
+
+        return stack.pop();
+    }
+}
