@@ -1,0 +1,36 @@
+// Leetcode
+class Solution {
+    public String makeGood(String s) {
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i<s.length(); i++){
+            char ch = s.charAt(i);
+
+            if(sb.length()>0 && Character.toLowerCase(sb.charAt(sb.length()-1)) == Character.toLowerCase(ch) && sb.charAt(sb.length()-1) != ch){
+                sb.deleteCharAt(sb.length()-1);
+            }else{
+                sb.append(ch);
+            }
+        }   
+        return sb.toString();
+    }
+}
+
+
+// gfg
+class Solution {
+    public boolean isGoodString(String s) {
+
+        for (int i = 1; i < s.length(); i++) {
+
+            int diff = Math.abs(s.charAt(i) - s.charAt(i - 1));
+
+            int distance = Math.min(diff, 26 - diff);
+
+            if (distance != 1) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+}
