@@ -1,0 +1,51 @@
+// leetcode
+import java.util.*;
+class Solution {
+    public boolean isValid(String s) {
+        Stack<Character> s1 = new Stack<>();
+        
+        for( char ch : s.toCharArray()){
+            if(ch == '(' || ch == '{' || ch == '['){
+                s1.push(ch);
+            }
+        
+        else{
+            if(s1.isEmpty())
+            return false;
+            
+            char top = s1.pop();
+
+            if((ch == ')' && top != '(') ||
+            (ch == '}' && top != '{') ||
+            (ch == ']' && top != '[')){
+            return false;
+             }
+        }
+    }
+    return s1.isEmpty();
+    }
+}
+
+
+//Leetcode
+class Solution {
+    public boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        HashMap<Character, Character> map = new HashMap<>();
+        map.put(')', '(');
+        map.put('}', '{');
+        map.put(']', '[');
+
+        for(int i=0; i<s.length(); i++){
+            char ch = s.charAt(i);
+            if(map.containsKey(ch)){
+                if(stack.isEmpty() || stack.pop() != map.get(ch)){
+                    return false;
+                }
+            }else{
+                stack.push(ch);
+            }
+        }
+        return stack.isEmpty();
+    }
+}
