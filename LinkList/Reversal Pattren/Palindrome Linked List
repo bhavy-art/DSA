@@ -1,0 +1,92 @@
+// Leetcode optimal but taking extra space
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        ArrayList<Integer> list = new ArrayList<>();
+
+        while(head != null){
+            list.add(head.val);
+            head = head.next;
+        }
+
+        int i = 0;
+        int j = list.size()-1;
+
+        while(i<j){
+            if(!list.get(i).equals(list.get(j))){
+                return false;
+            }
+            i++;
+            j--;
+        }
+        return true;
+    }
+}
+
+
+// Leetcode optimal without taking extra space
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        ListNode slow = head;
+        ListNode fast = head;
+
+        // find mid
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        ListNode prev = null;
+
+        // reverse
+        while(slow != null){
+            ListNode next = slow.next;
+            slow.next = prev;
+            prev = slow;
+            slow = next;
+        }
+
+        // check
+        while(prev != null){
+            if(head.val != prev.val){
+                return false;
+            }
+            head = head.next;
+            prev = prev.next;
+        }
+        return true;
+    }
+}
+
+
+
+// gfg
+class Solution {
+    public boolean isPalindrome(Node head) {
+        // code here
+        Node slow = head;
+        Node fast = head;
+        
+        while(fast != null && fast.next != null){
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        
+        Node prev = null;
+        
+        while(slow != null){
+            Node next = slow.next;
+            slow.next = prev;
+            prev = slow;
+            slow = next;
+        }
+        
+        while(prev != null){
+            if(head.data != prev.data){
+                return false;
+            }
+            head = head.next;
+            prev = prev.next;
+        }
+        return true;
+    }
+}
