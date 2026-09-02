@@ -1,0 +1,36 @@
+// leetcode
+class Solution {
+    public ListNode rotateRight(ListNode head, int k) {
+        if(head == null || head.next == null || k==0){
+            return head;
+        }
+        // find length
+        ListNode temp = head;
+        int length = 1;
+
+        while(temp.next!=null){
+            temp = temp.next;
+            length++;
+        }
+        // make circular
+        temp.next = head;
+
+        // reduce k
+        k=k%length;
+
+        // find new tail
+        int steps = length-k;
+        ListNode newTail = head;
+
+        for(int i=1;i<steps;i++){
+            newTail = newTail.next;
+        }
+
+        // break circle
+        ListNode newHead = newTail.next;
+        newTail.next = null;
+
+        return newHead;
+
+    }
+}
